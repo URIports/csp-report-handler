@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSP Report Sample</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src https://*.uriports.com;">
+    <script type="application/json" id="uriports-csp-report-config">
+      {
+        "subdomain": "your-subdomain-here",
+        "fraction": 1,
+        "ignorePatterns": ["example.com", "analytics.js", "demo.html"]
+      }
+    </script>
+    <script src="uriports-csp-report-handler.js"></script>
+</head>
+<body>
+    <h1>Content Security Policy Report Demo</h1>
+    <p>This is a sample page demonstrating the use of CSP reporting via JavaScript.</p>
+    <!-- Add some inline scripts to trigger security policy violations for testing -->
+    <script>
+        // Example of an inline script that may trigger a CSP violation if inline scripts are blocked
+        console.log("Inline script running - this might trigger a CSP violation depending on the policy");
+    </script>
+</body>
+</html>
