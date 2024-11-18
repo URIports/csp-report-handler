@@ -83,22 +83,27 @@
 		if (!subdomain) return;
 
 		// Build the CSP report payload
-		const json = {
-			'csp-report': {
-				'blockedURL'        : event.blockedURI ?? null,
-				'columnNumber'      : event.columnNumber ?? null,
-				'documentURL'       : event.documentURI ?? null,
-				'effectiveDirective': event.effectiveDirective ?? null,
-				'lineNumber'        : event.lineNumber ?? null,
-				'originalPolicy'    : event.originalPolicy ?? null,
-				'sourceFile'        : event.sourceFile ?? null,
-				'statusCode'        : event.statusCode ?? null,
-				'referrer'          : event.referrer ?? null,
-				'sample'            : event.sample ?? null,
-				'disposition'       : event.disposition ?? null,
-				'fraction'          : fraction ?? null // Add the sampling fraction used, not CSP3 spec, but URIports uses it for calculations
+		const json = [
+			{
+				"age": 0,
+				"body": {
+					"blockedURL"        : event.blockedURI ?? null,
+					"columnNumber"      : event.columnNumber ?? null,
+					"documentURL"       : event.documentURI ?? null,
+					"disposition"       : event.disposition ?? null,
+					"effectiveDirective": event.effectiveDirective ?? null,
+					"lineNumber"        : event.lineNumber ?? null,
+					"originalPolicy"    : event.originalPolicy ?? null,
+					"referrer"          : event.referrer ?? null,
+					"sample"            : event.sample ?? null,
+					"sourceFile"        : event.sourceFile ?? null,
+					"statusCode"        : event.statusCode ?? null
+				},
+				"type"      : "csp-violation",
+				"url"       : event.documentURI ?? null,
+				"user_agent": navigator.userAgent ?? null
 			}
-		};
+		];
 
 		// Send the CSP report to the configured URIports endpoint
 		fetch(`https://${subdomain}.uriports.com/reports/report`, {
